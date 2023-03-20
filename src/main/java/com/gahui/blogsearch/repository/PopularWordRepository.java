@@ -14,13 +14,13 @@ import java.util.Optional;
 @Repository
 public interface PopularWordRepository extends JpaRepository<PopularWord, Long> {
 
-    PopularWord findByWord(String word);
+    Optional<List<PopularWord>> findByWordIn(List<String> words);
 
-    Optional<List<PopularWord>> findTop10By(Sort sort);
+    Optional<List<PopularWord>> findTop1000By(Sort sort);
 
     @Modifying
     @Transactional
-    @Query("UPDATE PopularWord p SET p.cnt = p.cnt + 1 where p.word = :word")
-    void updateWordCnt(String word);
+    @Query("UPDATE PopularWord p SET p.cnt = p.cnt + :cnt , p.updateDt = current_time where p.word = :word")
+    void updateWordCnt(String word, int cnt);
 
 }

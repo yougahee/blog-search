@@ -1,9 +1,6 @@
 package com.gahui.blogsearch.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PopularWord {
@@ -27,9 +25,9 @@ public class PopularWord {
     private LocalDateTime updateDt;
 
     @Builder(builderClassName = "insertWord", builderMethodName = "insertWord")
-    public PopularWord(@NotNull String word) {
+    public PopularWord(@NotNull String word, int cnt) {
         this.word = word;
-        this.cnt = 1;
+        this.cnt = cnt;
         this.createDt = LocalDateTime.now();
     }
 }
