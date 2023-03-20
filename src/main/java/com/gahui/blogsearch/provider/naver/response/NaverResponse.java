@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class NaverResponse<T> {
@@ -19,5 +19,9 @@ public class NaverResponse<T> {
     int display;
     List<T> items;
     LocalDateTime lastBuildDate;
+
+    public NaverResponse() {
+        this.items = Collections.emptyList();
+    }
 
 }

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class MetaResponse {
     int totalCount;
     int pageableCount;
-    boolean isEnd;
+    Boolean isEnd;
 }

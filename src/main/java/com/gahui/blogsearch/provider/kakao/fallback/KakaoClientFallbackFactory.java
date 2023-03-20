@@ -15,10 +15,7 @@ import lombok.val;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -34,20 +31,27 @@ public class KakaoClientFallbackFactory implements FallbackFactory<KakaoClient> 
             val result = new KakaoResponse<Document>();
 
             if (throwable instanceof FeignException) {
-                val naverRes = getNaverRes(query, sort, page, size);
-                mappingKakaoRes(result, naverRes);
+                int httpStatus = ((FeignException) throwable).status();
+
+                if ( String.valueOf(httpStatus).startsWith("5") ) { // 서버 내부 에러
+                    val naverRes = getNaverRes(query, sort, page, size);
+                    mappingKakaoRes(result, naverRes);
+                }
             }
 
             return result;
         };
     }
 
+    private NaverResponse<Item> getNaverRes(String query, String sort, int page, int size) {
+        return naverProvider.searchBlogApi(getNaverSearchQuery(query, sort, page, size));
+    }
+
     private void mappingKakaoRes(KakaoResponse<Document> result, NaverResponse<Item> naverRes) {
         if (Objects.isNull(naverRes) || Objects.isNull(naverRes.getItems())) return;
 
         result.getMeta().setTotalCount(naverRes.getTotal());
-        result.getMeta().setPageableCount(naverRes.getDisplay());
-        result.getMeta().setEnd(false);
+        result.getMeta().setIsEnd((naverRes.getStart() * naverRes.getDisplay() >= naverRes.getTotal()));
 
         result.setDocuments(getDocuments(naverRes.getItems()));
     }
@@ -55,19 +59,19 @@ public class KakaoClientFallbackFactory implements FallbackFactory<KakaoClient> 
     private List<Document> getDocuments(List<Item> items) {
         val result = new ArrayList<Document>();
 
-        items.forEach(item -> result.add(Document.builder()
-                .title(item.getTitle())
-                .contents(item.getDesciption())
-                .blogname(item.getBloggername())
-                .url(item.getLink())
-                .datetime(item.getPostdate())
-                .build()));
+        items.forEach(item -> result.add(getDocument(item)));
 
         return result;
     }
 
-    private NaverResponse<Item> getNaverRes(String query, String sort, int page, int size) {
-        return naverProvider.searchBlogApi(getNaverSearchQuery(query, sort, page, size));
+    private Document getDocument(Item item) {
+        return Document.builder()
+                .title(Optional.ofNullable(item.getTitle()).orElse(""))
+                .contents(Optional.ofNullable(item.getDescription()).orElse(""))
+                .blogname(Optional.ofNullable(item.getBloggername()).orElse(""))
+                .url(Optional.ofNullable(item.getLink()).orElse(""))
+                .datetime(Optional.ofNullable(item.getPostdate()).orElse(""))
+                .build();
     }
 
     private SearchQuery getNaverSearchQuery(String query, String sort, int page, int size) {

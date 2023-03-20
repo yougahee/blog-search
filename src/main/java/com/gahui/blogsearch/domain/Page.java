@@ -12,7 +12,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Page<T> {
     int totalCount;
-    int pageableCount;
-    boolean isEnd;
+    int page;
+    int size;
+    Boolean isEnd;
     List<T> list;
 }

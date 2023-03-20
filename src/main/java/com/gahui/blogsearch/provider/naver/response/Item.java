@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class Item {
     String title;
     String link;
-    String desciption;
+    String description;
     String bloggername;
     String bloggerlink;
     String postdate;
