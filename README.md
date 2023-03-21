@@ -1,37 +1,39 @@
-# BLOG Search API SERVER
-#### 작성자 : gahyu
-#### 작성일자 : 23/03/21
+# 🔎 BLOG Search API SERVER
+- 작성자 : gahyu 
+- 작성일자 : 23/03/21
+
+<br>
 
 ## 📌 사용 프레임워크 및 DB
 - SpringBoot
 - h2 DB
 
+<br>
+
 ## 📌 사용 라이브러리
 #### 1) feign client 
    - kakao, naver 오픈 소스 API 연동
-<br> </br>
 
 #### 2) lombok
    - @getter, @setter, @NoArgsConstructor 사용을 위함.
-  <br> </br>
 
 #### 3) JPA
    - 사용 목적 :  DB 컨트롤 
-   <br> </br>
 
 #### 4) common-lang3
    - 사용 목적 : StringUtils 사용
 
-   <br>
-
 #### 5) spring-boot-starter-test
 - 테스트 코드
+
 <br> 
 
 ## 📌 API 명세서
-- [명세서 바로가기](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
-- [블로그 검색 API](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
-- [인기 검색어 API](https://github.com/yougahee/blog-search/wiki/%EC%9D%B8%EA%B8%B0-%EA%B2%80%EC%83%89%EC%96%B4-%EC%A1%B0%ED%9A%8C-API)
+- 🔗 [명세서 바로가기](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
+- 🔗 [블로그 검색 API](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
+- 🔗 [인기 검색어 API](https://github.com/yougahee/blog-search/wiki/%EC%9D%B8%EA%B8%B0-%EA%B2%80%EC%83%89%EC%96%B4-%EC%A1%B0%ED%9A%8C-API)
+
+<br>
 
 ## 📌 기능 구현
 ### 1. 블로그 검색 API
@@ -58,6 +60,8 @@
      - Bad Request(Invalid Parameter 등) 의 경우는 검색어 수집 기준에서 제외
      - Kakao API 오류 또는 검색어 결과가 없는 경우는 검색어 수집
    - 즉, 서비스 단에 들어오면 검색어 수집하는 것이 좋다는 판단으로 인해 서비스 단의 비동기 작업으로 추가
+
+<br>
 
 ## 📌 dependencies
 ```
