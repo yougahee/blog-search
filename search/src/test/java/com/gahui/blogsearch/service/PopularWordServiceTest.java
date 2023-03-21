@@ -2,9 +2,7 @@ package com.gahui.blogsearch.service;
 
 
 import lombok.val;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.task.TaskExecutor;
 
 import java.util.concurrent.locks.ReentrantLock;
 
