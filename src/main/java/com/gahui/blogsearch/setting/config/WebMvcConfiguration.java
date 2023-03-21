@@ -1,28 +1,40 @@
 package com.gahui.blogsearch.setting.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gahui.blogsearch.domain.enums.converter.SortTypeConverter;
-import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-@EnableWebMvc
 @Configuration
-@RequiredArgsConstructor
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    private final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter;
+    private ObjectMapper objectMapper;
+
+    public WebMvcConfiguration(ObjectMapper objectMapper) {
+
+        this.objectMapper = objectMapper;
+
+    }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(mappingJackson2HttpMessageConverter);
+
+        converters.clear();
+
+        converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
+
+        converters.add(getJsonConverter());
+
     }
 
     @Override
@@ -35,6 +47,13 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Bean
     public MethodValidationPostProcessor methodValidationPostProcessor() {
         return new MethodValidationPostProcessor();
+    }
+
+    public MappingJackson2HttpMessageConverter getJsonConverter() {
+        val jsonConverter = new MappingJackson2HttpMessageConverter(objectMapper);
+        jsonConverter.setDefaultCharset(StandardCharsets.UTF_8);
+
+        return jsonConverter;
     }
 }
 
