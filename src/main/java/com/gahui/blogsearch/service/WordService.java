@@ -3,6 +3,7 @@ package com.gahui.blogsearch.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -23,18 +24,20 @@ public class WordService {
         searchWordMap.merge(word, 1, (k, v) -> searchWordMap.get(word) + 1);
     }
 
-    public synchronized void saveOriginDbWordDb(String k, Integer v) {
+    public void saveBulkDbWord(Map<String, Integer> map) {
+        getDbWordMap().putAll(map);
+    }
+
+    public void saveOriginDbWordDb(String k, Integer v) {
         getDbWordMap().put(k, v);
     }
 
-    public synchronized void clearSearchWordMap() {
+    public void clearSearchWordMap() {
         getSearchWordMap().clear();
-        log.info("clear search Word Map Size : {} ", getSearchWordMap().size());
     }
 
-    public synchronized void clearDbWordMap() {
-        getSearchWordMap().clear();
-        log.info("clear search Word Map Size : {} ", getSearchWordMap().size());
+    public void clearDbWordMap() {
+        getDbWordMap().clear();
     }
 
 }
