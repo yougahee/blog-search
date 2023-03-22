@@ -9,9 +9,9 @@ import java.util.Map;
 @Slf4j
 @Service
 public class WordLocalService {
-    private final HashMap<String, Integer> searchWordMap = new HashMap<>();
+    private final Map<String, Integer> searchWordMap = new HashMap<>();
 
-    public HashMap<String, Integer> getSearchWordMap() {
+    public Map<String, Integer> getSearchWordMap() {
         return searchWordMap;
     }
 

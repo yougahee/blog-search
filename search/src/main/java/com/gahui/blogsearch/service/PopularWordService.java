@@ -25,6 +25,10 @@ public class PopularWordService {
     private final WordDbService wordDbService;
     private final WordLocalService wordLocalService;
 
+    /**
+     * 현재는 h2DB(in memory)로 필요 없는 코드이긴 하나,
+     * 외부 DB를 연결해서 사용한다고 했을 때를 고려하여 코드 추가
+     */
     @PostConstruct
     public void init() {
         setLocalHashMapByDbData();
@@ -74,7 +78,7 @@ public class PopularWordService {
         return getTop10Words(wordLocalService.getSearchWordMap());
     }
 
-    private List<PopularWordRes> getTop10Words(HashMap<String, Integer> wordsMap) {
+    private List<PopularWordRes> getTop10Words(Map<String, Integer> wordsMap) {
         val sortingMap = sortByCntDesc(wordsMap.entrySet());
 
         return sortingMap.stream().limit(10)

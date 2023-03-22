@@ -23,7 +23,7 @@ class SearchServiceTest {
     SearchService spySearchService = spy(searchService);
 
     @Test
-    @DisplayName("블로그 검색 API > 성공 케이스")
+    @DisplayName("블로그 검색 > 성공 케이스")
     void searchBlog() {
         // given
         val query = "hi";
@@ -49,6 +49,32 @@ class SearchServiceTest {
         assert result.getTotalCount() > 0;
         assert result.getPage() == Search.MIN_PAGE;
         assert result.getSize() == Search.MIN_PAGE;
+    }
+
+
+    @Test
+    @DisplayName("블로그 검색 > 실패 케이스")
+    void searchBlogFail() {
+        // given
+        val query = "hi";
+        val searchQuery = SearchQuery.builder()
+                .query(query.strip())
+                .page(200)
+                .size((int) Search.MIN_SIZE)
+                .build();
+
+        val kakaoResult = new KakaoResponse<Document>();
+        doReturn(kakaoResult).when(kakaoProvider).searchBlogApi(searchQuery);
+
+        // when
+        val result = spySearchService.searchBlog(searchQuery);
+
+        // then
+        verify(kakaoProvider).searchBlogApi(searchQuery);
+        assert result.getSize() == 1;
+        assert result.getPage() == 200;
+        assert result.getIsEnd() == null;
+        assert result.getList().size() == 0;
     }
 
     Document getDoc() {

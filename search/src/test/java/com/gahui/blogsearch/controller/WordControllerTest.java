@@ -13,33 +13,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.handler;
 
-class SearchControllerTest extends ApplicationTests {
+class WordControllerTest extends ApplicationTests  {
     @MockBean
     SearchService searchService;
 
     @Test
-    @DisplayName("블로그 검색 API 테스트")
-    void searchBlog() throws Exception {
+    @DisplayName("인기 검색어 조회 API 테스트")
+    void popularWord() throws Exception {
         // given
-        String queryString = "?query=%EC%B2%9C%EC%9E%AC";
 
         // when
-        ResultActions response = searchBlogActions(mockMvc, queryString);
+        ResultActions response = popularWord(mockMvc);
 
         // then
         expectSuccess(response)
                 .andDo(print());
     }
 
-    private ResultActions searchBlogActions(MockMvc mockMvc, String queryString) throws Exception {
+
+    private ResultActions popularWord(MockMvc mockMvc) throws Exception {
 
         return mockMvc
-                .perform(get( "/v1.0/search/blog" + queryString)
+                .perform(get( "/v1.0/popular-word")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON)
                 )
-                .andExpect(handler().handlerType(SearchController.class))
-                .andExpect(handler().methodName("blogSearch"));
+                .andExpect(handler().handlerType(WordController.class))
+                .andExpect(handler().methodName("popularWord"));
     }
 
 }
