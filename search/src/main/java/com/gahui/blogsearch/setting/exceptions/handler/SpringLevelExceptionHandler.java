@@ -1,7 +1,7 @@
 package com.gahui.blogsearch.setting.exceptions.handler;
 
-import com.gahui.blogsearch.domain.RestResponse;
-import com.gahui.blogsearch.domain.enums.ResponseCode;
+import domain.RestResponse;
+import domain.enums.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;

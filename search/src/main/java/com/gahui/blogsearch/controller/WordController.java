@@ -1,7 +1,7 @@
 package com.gahui.blogsearch.controller;
 
 import com.gahui.blogsearch.aop.response.annotation.SearchRes;
-import com.gahui.blogsearch.domain.response.PopularWordRes;
+import domain.response.PopularWordRes;
 import com.gahui.blogsearch.service.PopularWordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

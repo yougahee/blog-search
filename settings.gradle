@@ -6,4 +6,5 @@ pluginManagement {
 
 rootProject.name = 'blog-search'
 include 'search'
+include 'search-core'
 

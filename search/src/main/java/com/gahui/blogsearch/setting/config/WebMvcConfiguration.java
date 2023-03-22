@@ -1,7 +1,7 @@
 package com.gahui.blogsearch.setting.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gahui.blogsearch.domain.enums.converter.SortTypeConverter;
+import domain.enums.converter.SortTypeConverter;
 import lombok.val;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

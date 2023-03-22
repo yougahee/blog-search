@@ -1,6 +1,6 @@
 package com.gahui.blogsearch.setting.exceptions;
 
-import com.gahui.blogsearch.domain.enums.ResponseCode;
+import domain.enums.ResponseCode;
 import lombok.Getter;
 
 @Getter

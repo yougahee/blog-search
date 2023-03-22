@@ -1,4 +1,4 @@
-package com.gahui.blogsearch.domain;
+package domain;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

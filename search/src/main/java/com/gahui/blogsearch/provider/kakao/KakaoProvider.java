@@ -1,6 +1,6 @@
 package com.gahui.blogsearch.provider.kakao;
 
-import com.gahui.blogsearch.domain.request.SearchQuery;
+import domain.request.SearchQuery;
 import com.gahui.blogsearch.provider.kakao.response.Document;
 import com.gahui.blogsearch.provider.kakao.response.KakaoResponse;
 import lombok.RequiredArgsConstructor;

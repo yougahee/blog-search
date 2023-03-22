@@ -1,6 +1,6 @@
-package com.gahui.blogsearch.domain.enums.converter;
+package domain.enums.converter;
 
-import com.gahui.blogsearch.domain.enums.SortType;
+import domain.enums.SortType;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 

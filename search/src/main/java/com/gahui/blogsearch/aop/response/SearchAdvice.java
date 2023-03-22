@@ -1,7 +1,7 @@
 package com.gahui.blogsearch.aop.response;
 
 import com.gahui.blogsearch.aop.response.annotation.SearchRes;
-import com.gahui.blogsearch.domain.RestResponse;
+import domain.RestResponse;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;

@@ -1,6 +1,6 @@
-package com.gahui.blogsearch.domain.request;
+package domain.request;
 
-import com.gahui.blogsearch.domain.enums.SortType;
+import domain.enums.SortType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

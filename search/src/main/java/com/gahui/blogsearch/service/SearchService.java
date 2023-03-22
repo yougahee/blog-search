@@ -1,8 +1,8 @@
 package com.gahui.blogsearch.service;
 
-import com.gahui.blogsearch.domain.Page;
-import com.gahui.blogsearch.domain.request.SearchQuery;
-import com.gahui.blogsearch.domain.response.BlogInfo;
+import domain.Page;
+import domain.request.SearchQuery;
+import domain.response.BlogInfo;
 import com.gahui.blogsearch.provider.kakao.KakaoProvider;
 import com.gahui.blogsearch.provider.kakao.response.Document;
 import com.gahui.blogsearch.provider.kakao.response.MetaResponse;

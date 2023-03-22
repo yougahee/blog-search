@@ -2,7 +2,7 @@ package com.gahui.blogsearch.service;
 
 import static java.util.stream.Collectors.toMap;
 
-import com.gahui.blogsearch.domain.response.PopularWordRes;
+import domain.response.PopularWordRes;
 import com.gahui.blogsearch.model.PopularWord;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

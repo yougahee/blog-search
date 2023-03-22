@@ -1,7 +1,7 @@
-package com.gahui.blogsearch.domain;
+package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.gahui.blogsearch.domain.enums.ResponseCode;
+import domain.enums.ResponseCode;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

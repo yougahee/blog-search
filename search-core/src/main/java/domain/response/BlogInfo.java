@@ -1,4 +1,4 @@
-package com.gahui.blogsearch.domain.response;
+package domain.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

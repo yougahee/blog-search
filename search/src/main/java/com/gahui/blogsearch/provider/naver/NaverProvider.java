@@ -1,13 +1,13 @@
 package com.gahui.blogsearch.provider.naver;
 
-import com.gahui.blogsearch.domain.enums.SortType;
-import com.gahui.blogsearch.domain.request.SearchQuery;
+import domain.enums.SortType;
+import domain.request.SearchQuery;
 import com.gahui.blogsearch.provider.naver.response.Item;
 import com.gahui.blogsearch.provider.naver.response.NaverResponse;
-import com.gahui.blogsearch.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import util.StringUtils;
 
 @Component
 @RequiredArgsConstructor

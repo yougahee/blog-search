@@ -1,10 +1,10 @@
 package com.gahui.blogsearch.controller;
 
 import com.gahui.blogsearch.aop.response.annotation.SearchRes;
-import com.gahui.blogsearch.domain.Page;
-import com.gahui.blogsearch.domain.enums.SortType;
-import com.gahui.blogsearch.domain.request.SearchQuery;
-import com.gahui.blogsearch.domain.response.BlogInfo;
+import domain.Page;
+import domain.enums.SortType;
+import domain.request.SearchQuery;
+import domain.response.BlogInfo;
 import com.gahui.blogsearch.service.SearchService;
 import com.gahui.blogsearch.setting.constant.Search;
 import lombok.RequiredArgsConstructor;

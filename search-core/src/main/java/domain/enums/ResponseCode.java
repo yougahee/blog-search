@@ -1,4 +1,4 @@
-package com.gahui.blogsearch.domain.enums;
+package domain.enums;
 
 public enum ResponseCode {
 

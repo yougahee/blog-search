@@ -1,7 +1,7 @@
 package com.gahui.blogsearch.provider.kakao.fallback;
 
-import com.gahui.blogsearch.domain.enums.SortType;
-import com.gahui.blogsearch.domain.request.SearchQuery;
+import domain.enums.SortType;
+import domain.request.SearchQuery;
 import com.gahui.blogsearch.provider.kakao.KakaoClient;
 import com.gahui.blogsearch.provider.kakao.response.Document;
 import com.gahui.blogsearch.provider.kakao.response.KakaoResponse;
