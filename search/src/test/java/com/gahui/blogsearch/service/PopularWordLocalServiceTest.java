@@ -14,16 +14,21 @@ class PopularWordLocalServiceTest {
 
     WordLocalService wordService = mock(WordLocalService.class);
     WordDbService wordDbService = mock(WordDbService.class);
-    ReentrantLock lock = mock(ReentrantLock.class);
+    ReentrantLock lock = new ReentrantLock();
 
     PopularWordService popularWordService = new PopularWordService(wordDbService, wordService);
     PopularWordService spyPopularWordService = spy(popularWordService);
 
-
     @Test
-    void init() {
-    }
+    void initTest() {
+        // given
 
+
+        // when
+        spyPopularWordService.init();
+
+        // then
+    }
 
     @Test
     void getPopularWords() {
