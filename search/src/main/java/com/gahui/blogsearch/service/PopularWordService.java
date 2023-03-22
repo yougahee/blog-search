@@ -78,7 +78,7 @@ public class PopularWordService {
         return getTop10Words(wordLocalService.getSearchWordMap());
     }
 
-    private List<PopularWordRes> getTop10Words(HashMap<String, Integer> wordsMap) {
+    private List<PopularWordRes> getTop10Words(Map<String, Integer> wordsMap) {
         val sortingMap = sortByCntDesc(wordsMap.entrySet());
 
         return sortingMap.stream().limit(10)
