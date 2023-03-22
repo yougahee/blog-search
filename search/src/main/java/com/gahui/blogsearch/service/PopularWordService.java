@@ -25,6 +25,10 @@ public class PopularWordService {
     private final WordDbService wordDbService;
     private final WordLocalService wordLocalService;
 
+    /**
+     * 현재는 h2DB(in memory)로 필요 없는 코드이긴 하나,
+     * 외부 DB를 연결해서 사용한다고 했을 때를 고려하여 코드 추가
+     */
     @PostConstruct
     public void init() {
         setLocalHashMapByDbData();
