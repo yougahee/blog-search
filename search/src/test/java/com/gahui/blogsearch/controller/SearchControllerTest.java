@@ -2,6 +2,7 @@ package com.gahui.blogsearch.controller;
 
 import com.gahui.blogsearch.ApplicationTests;
 import com.gahui.blogsearch.service.SearchService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ class SearchControllerTest extends ApplicationTests {
     SearchService searchService;
 
     @Test
+    @DisplayName("블로그 검색 API 테스트")
     void searchBlog() throws Exception {
         // given
         String queryString = "?query=%EC%B2%9C%EC%9E%AC";
