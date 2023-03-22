@@ -28,10 +28,6 @@ public class WordService {
         getDbWordMap().putAll(map);
     }
 
-    public void saveOriginDbWordDb(String k, Integer v) {
-        getDbWordMap().put(k, v);
-    }
-
     public void clearSearchWordMap() {
         getSearchWordMap().clear();
     }

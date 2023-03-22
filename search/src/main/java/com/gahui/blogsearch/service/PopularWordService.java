@@ -117,9 +117,7 @@ public class PopularWordService {
         } catch (Exception e) {
             log.error("[settingHashMap] ReentrantLock lock failed.", e);
         } finally {
-            if(Objects.nonNull(lock) ) {
-                lock.unlock();
-            }
+            lock.unlock();
         }
     }
 
