@@ -14,6 +14,8 @@ import java.util.Optional;
 @Repository
 public interface PopularWordRepository extends JpaRepository<PopularWord, Long> {
 
+    Optional<PopularWord> findPopularWordsByWord(String word);
+
     Optional<List<PopularWord>> findByWordIn(List<String> words);
 
     Optional<List<PopularWord>> findTop1000By(Sort sort);

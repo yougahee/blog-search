@@ -1,4 +1,4 @@
-package com.gahui.blogsearch.util;
+package util;
 
 import org.junit.jupiter.api.Test;
 

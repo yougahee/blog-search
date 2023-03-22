@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -19,37 +18,26 @@ public class WordDbService {
     private final PopularWordRepository popularWordRepository;
 
     @Transactional
-    public void bulkUpsertWords(Map<String, Integer> words) {
-        Set<String> wordSet = words.keySet();
-        val dbExistWords = getPopularWordsById(new ArrayList<>(wordSet));
-        val dbExistId = dbExistWords.stream().map(PopularWord::getWord).collect(Collectors.toSet());
+    public void upsertWord(String word) {
+        val popularWord = getPopularWordById(word);
 
-        val dbNotExistWords= wordSet.stream()
-                .filter(word -> !dbExistId.contains(word))
-                .collect(Collectors.toList());
-
-        // insert
-        insertWords(dbNotExistWords, words);
-
-        // update
-        updateWords(dbExistWords, words);
+        if (Objects.isNull(popularWord)) {
+            insertWord(word, 1);
+        } else {
+            updateWordCnt(word, 1);
+        }
     }
 
-    public List<PopularWord> getPopularWordsById(List<String> words) {
-        return popularWordRepository.findByWordIn(words)
-                .orElse(Collections.emptyList());
+    public PopularWord getPopularWordById(String word) {
+        return popularWordRepository.findPopularWordsByWord(word)
+                .orElse(null);
     }
 
-    private void insertWords(List<String> dbNotExistWords, Map<String, Integer> words) {
-        dbNotExistWords.forEach(word -> popularWordRepository.save(PopularWord.insertWord()
+    private void insertWord(String word, int cnt) {
+        popularWordRepository.save(PopularWord.insertWord()
                 .word(word)
-                .cnt(words.get(word))
-                .build()));
-    }
-
-    private void updateWords(List<PopularWord> dbExistWords, Map<String, Integer> words) {
-        dbExistWords.forEach(word ->
-                updateWordCnt(word.getWord(), words.get(word.getWord())));
+                .cnt(cnt)
+                .build());
     }
 
     public void updateWordCnt(String word, int cnt) {

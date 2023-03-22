@@ -8,13 +8,8 @@ import java.util.Map;
 
 @Slf4j
 @Service
-public class WordService {
-    private final HashMap<String, Integer> dbWordMap = new HashMap<>();
+public class WordLocalService {
     private final HashMap<String, Integer> searchWordMap = new HashMap<>();
-
-    public HashMap<String, Integer> getDbWordMap() {
-        return dbWordMap;
-    }
 
     public HashMap<String, Integer> getSearchWordMap() {
         return searchWordMap;
@@ -25,15 +20,7 @@ public class WordService {
     }
 
     public void saveBulkDbWord(Map<String, Integer> map) {
-        getDbWordMap().putAll(map);
-    }
-
-    public void clearSearchWordMap() {
-        getSearchWordMap().clear();
-    }
-
-    public void clearDbWordMap() {
-        getDbWordMap().clear();
+        getSearchWordMap().putAll(map);
     }
 
 }

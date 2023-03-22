@@ -10,9 +10,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
 
-class PopularWordServiceTest {
+class PopularWordLocalServiceTest {
 
-    WordService wordService = mock(WordService.class);
+    WordLocalService wordService = mock(WordLocalService.class);
     WordDbService wordDbService = mock(WordDbService.class);
     ReentrantLock lock = mock(ReentrantLock.class);
 

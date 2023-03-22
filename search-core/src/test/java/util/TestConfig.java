@@ -1,4 +1,4 @@
-package com.gahui.blogsearch.util;
+package util;
 
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.test.context.TestConfiguration;
