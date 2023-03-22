@@ -2,6 +2,7 @@ package com.gahui.blogsearch.service;
 
 import static java.util.stream.Collectors.toMap;
 
+import com.gahui.blogsearch.aop.concurrent.annotation.ConcurrentAop;
 import domain.response.PopularWordRes;
 import com.gahui.blogsearch.model.PopularWord;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 
 
@@ -23,22 +23,23 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PopularWordService {
     private final WordDbService wordDbService;
-    private final WordService wordService;
-    private final ReentrantLock lock = new ReentrantLock();
+    private final WordLocalService wordLocalService;
 
     @PostConstruct
     public void init() {
-        setDbWordMap();
+        setLocalHashMapByDbData();
     }
 
     /**
-     * 검색어 수집을 위한 비동기 작업
+     * <h2> 검색어 수집을 위한 비동기 작업 </h2>
+     *
      * @param searchWord 검색어
      */
     @Async
     public void saveWord(String searchWord) {
         try {
-            wordService.incSearchCnt(searchWord);
+            wordDbService.upsertWord(searchWord); // 메인 DB 업데이트
+            wordLocalService.incSearchCnt(searchWord); // 로컬 캐시 업데이트
         } catch (Exception e) {
             log.error("Save Word Exception : {}", e.getMessage());
         }
@@ -53,12 +54,24 @@ public class PopularWordService {
         return calPopularWords();
     }
 
-    private List<PopularWordRes> calPopularWords() {
-        val wordsMap = new HashMap<>(wordService.getDbWordMap());
-        wordService.getSearchWordMap()
-                .forEach((k, v) -> mergeWords(wordsMap, k, v));
+    /**
+     * <h2>스케줄링</h2>
+     * <br> 주기 : 5분
+     * <br> db HashMap setting
+     */
+    @ConcurrentAop
+    @Scheduled(cron = "0 0/5 * * * *")
+    public void setHashMap() {
+        log.info("[Scheduling] start time : {} ", LocalDateTime.now());
 
-        return getTop10Words(wordsMap);
+        // 메인 DB 인기 검색어 조회 및 셋팅
+        setLocalHashMapByDbData();
+
+        log.info("[Scheduling] complete time : {} ", LocalDateTime.now());
+    }
+
+    private List<PopularWordRes> calPopularWords() {
+        return getTop10Words(wordLocalService.getSearchWordMap());
     }
 
     private List<PopularWordRes> getTop10Words(HashMap<String, Integer> wordsMap) {
@@ -67,10 +80,6 @@ public class PopularWordService {
         return sortingMap.stream().limit(10)
                 .map(t -> getPopularWordRes(t.getKey(), t.getValue()))
                 .collect(Collectors.toList());
-    }
-
-    private void mergeWords(HashMap<String, Integer> wordsMap, String key, Integer value) {
-        wordsMap.merge(key, value, (k, v) -> wordsMap.get(key) + value);
     }
 
     /**
@@ -90,41 +99,10 @@ public class PopularWordService {
                 .build();
     }
 
-    /**
-     * <p>스케줄링</p>
-     * <br> 주기 : 1분
-     * <br> 1) DB에 값 업데이트
-     * <br> 2) HashMap clear
-     * <br> 3) db HashMap setting
-     */
-    @Scheduled(cron = "0 * * * * *")
-    public void setHashMap() {
-        log.info("[Scheduling] start time : {} ", LocalDateTime.now());
-
-        // DB 값 업데이트
-        wordDbService.bulkUpsertWords(wordService.getSearchWordMap());
-
-        try {
-            lock.lock();
-
-            // 로컬 데이터 clear
-            wordService.clearSearchWordMap();
-            wordService.clearDbWordMap();
-
-            // DB 데이터 조회 및 셋팅
-            setDbWordMap();
-
-        } catch (Exception e) {
-            log.error("[settingHashMap] ReentrantLock lock failed.", e);
-        } finally {
-            lock.unlock();
-        }
-    }
-
-    private void setDbWordMap() {
+    private void setLocalHashMapByDbData() {
         val wordsMap = wordDbService.getPopularWordLimit1000().stream()
-                        .collect(toMap(PopularWord::getWord, PopularWord::getCnt));
+                .collect(toMap(PopularWord::getWord, PopularWord::getCnt));
 
-        wordService.saveBulkDbWord(wordsMap);
+        wordLocalService.saveBulkDbWord(wordsMap);
     }
 }

@@ -18,23 +18,19 @@ import java.util.List;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     public WebMvcConfiguration(ObjectMapper objectMapper) {
-
         this.objectMapper = objectMapper;
-
     }
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-
         converters.clear();
 
         converters.add(new StringHttpMessageConverter(StandardCharsets.UTF_8));
 
         converters.add(getJsonConverter());
-
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.gahui.blogsearch.controller;
 
+import com.gahui.blogsearch.aop.concurrent.annotation.ConcurrentAop;
 import com.gahui.blogsearch.aop.response.annotation.SearchRes;
 import domain.response.PopularWordRes;
 import com.gahui.blogsearch.service.PopularWordService;
@@ -22,6 +23,7 @@ public class WordController {
      *
      * @return 인기 검색어 상위 10개
      */
+    @ConcurrentAop
     @GetMapping("/popular-word")
     public List<PopularWordRes> popularWord() {
         return popularWordService.getPopularWords();
