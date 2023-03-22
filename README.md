@@ -4,51 +4,61 @@
 
 <br>
 
-## 📌 사용 프레임워크 및 DB
-- SpringBoot
+## 📌 Project Intoduction
+- 블로그 검색 및 인기 검색어 제공 서버
+
+- ### Executable JAR file 
+	- 🔗 [바로가기](https://github.com/yougahee/blog-search/tree/master/excutable_jar)
+	- 실행 명령어
+		- ```
+			java -jar blog-search-gahyu.jar
+	  		```
+- ### API 명세서
+	- 🔗 [명세서 바로가기](https://github.com/yougahee/blog-search/wiki)
+	- 🔗 [블로그 검색 API](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
+	- 🔗 [인기 검색어 API](https://github.com/yougahee/blog-search/wiki/%EC%9D%B8%EA%B8%B0-%EA%B2%80%EC%83%89%EC%96%B4-%EC%A1%B0%ED%9A%8C-API)
+<br>
+
+
+## 📌 Framework & DB
+- SpringBoot 2.6.6 
 - h2 DB
 
 <br>
 
-## 📌 사용 라이브러리
-#### 1) feign client 
-   - kakao, naver 오픈 소스 API 연동
+## 📌 Library
+order | Library       |  사용 목적
+--- | ------------- | ------------------------------
+1 | Feign | kakao, naver 오픈 소스 API 연동을 위한 HTTP Client
+2 | lombok | @getter, @setter, @NoArgsConstructor 사용 등으로 코드 간략화
+3 | JPA | DB 컨트롤
+4 | common-lang3 | StringUtils.isNull / notNull 등 문자열 관련 utils 함수 사용
+5 | spring-boot-starter-test | 테스트 코드 작성
 
-#### 2) lombok
-   - @getter, @setter, @NoArgsConstructor 사용을 위함.
-
-#### 3) JPA
-   - 사용 목적 :  DB 컨트롤 
-
-#### 4) common-lang3
-   - 사용 목적 : StringUtils 사용
-
-#### 5) spring-boot-starter-test
-- 테스트 코드
-
-<br> 
-
-## 📌 API 명세서
-- 🔗 [명세서 바로가기](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
-- 🔗 [블로그 검색 API](https://github.com/yougahee/blog-search/wiki/%EB%B8%94%EB%A1%9C%EA%B7%B8-%EA%B2%80%EC%83%89-API)
-- 🔗 [인기 검색어 API](https://github.com/yougahee/blog-search/wiki/%EC%9D%B8%EA%B8%B0-%EA%B2%80%EC%83%89%EC%96%B4-%EC%A1%B0%ED%9A%8C-API)
 
 <br>
 
-## 📌 기능 구현
-### 1. 블로그 검색 API
-#### 기본 컨셉 : 카카오 블로그 검색 API 연동
+## 📌 Project Details
+### 1. 멀티 모듈 구성 및 모듈간 의존성 제약
+- 프로젝트의 확장성을 고려하여 함께 사용할 수 있는 DTO domain 은 search-core 에서 관리하도록 구성
+
+### 2. 블로그 검색 API
+> 기본 컨셉 : 카카오 블로그 검색 오픈 API 를 통한 검색 리스트 제공
 - Fallback 
-  - 만약, 카카오 블로그 검색 API 오류 발생 시, 네이버 블로그 검색 API 연동
+  - 카카오 블로그 검색 API 오류 발생 시, 네이버 블로그 검색 API 연동하도록 Fallback 구현
+  - 네이버 블로그 검색 API 오류 시, 검색 API 응답은 에러를 던지지 않고, 빈 리스트 return
 - 인기 검색어 수집을 위한 비동기 처리
   - 해당 API로 들어온 검색어는 비동기 처리를 통해 저장
 
-### 2. 인기 검색어 API
-위 블로그 검색을 통해 들어온 검색어의 검색횟수를 바탕으로 인기 검색어 상위 10개 리스트 제공
+### 3. 인기 검색어 API
+> 위 블로그 검색을 통해 들어온 검색어의 검색횟수를 바탕으로 인기 검색어 상위 10개 리스트 제공
+
 - 메인 > In memory DB : h2 Database 사용
   - ex) RDB
 - 서브 > 로컬 메모리 사용
   - ex) 외부 DB를 사용한다면 redis 사용
+
+<br> 
 
 ### * 주요 고민 포인트
 1. 인기 검색어 API 요청이 들어올 때마다 H2 DB > 쿼리 조회 > 대용량 API 호출 시 DB부하
@@ -63,7 +73,8 @@
 
 <br>
 
-## 📌 dependencies
+## 📌 Appendix
+### dependencies
 ```
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -78,7 +89,7 @@
 
 	// feign
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 
 	// jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
